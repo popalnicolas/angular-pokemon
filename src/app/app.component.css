@@ -1,0 +1,10 @@
+.content
+{
+  margin-top: 80px;
+}
+
+.mat-toolbar
+{
+  position: fixed;
+  z-index: 999;
+}

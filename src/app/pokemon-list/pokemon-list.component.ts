@@ -1,0 +1,102 @@
+import { Component, OnInit } from '@angular/core';
+import {PokemonService} from "../pokemon.service";
+import {Pokemon} from "../model/pokemon";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+
+@Component({
+  selector: 'app-pokemon-list',
+  templateUrl: './pokemon-list.component.html',
+  styleUrls: ['./pokemon-list.component.css']
+})
+export class PokemonListComponent implements OnInit {
+
+  public pokemons: any = [];
+  public pokemonType: any;
+  public errorMsg: any;
+
+  constructor(private _pokemonService: PokemonService, private route:ActivatedRoute, private router: Router) { }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.pokemonType = <string>params.get('type');
+      this.getFromWebservices(this.pokemonType);
+    });
+  }
+
+  getType(type: number)
+  {
+    switch (type)
+    {
+      case 1:
+        return "Grass";
+      case 2:
+        return "Fire";
+      case 3:
+        return "Electric";
+      case 4:
+        return "Water";
+      default:
+        return "Other";
+    }
+  }
+
+  getFromWebservices(pokemonType: any)
+  {
+    delete this.pokemons;
+    switch(pokemonType)
+    {
+      case "grass":
+        this._pokemonService.getPokemonsByType(1).subscribe(data => this.pokemons = data, error => this.errorMsg = error);
+        break;
+      case "fire":
+        this._pokemonService.getPokemonsByType(2).subscribe(data => this.pokemons = data, error => this.errorMsg = error);
+        break;
+      case "electric":
+        this._pokemonService.getPokemonsByType(3).subscribe(data => this.pokemons = data, error => this.errorMsg = error);
+        break;
+      case "water":
+        this._pokemonService.getPokemonsByType(4).subscribe(data => this.pokemons = data, error => this.errorMsg = error);
+        break;
+      case "other":
+        this._pokemonService.getPokemonsByType(5).subscribe(data => this.pokemons = data, error => this.errorMsg = error);
+        break;
+      default:
+        this._pokemonService.getPokemons().subscribe(data => this.pokemons = data, error => this.errorMsg = error);
+    }
+  }
+
+  likePokemon(pokemon: Pokemon)
+  {
+    pokemon.pokemonLikes++;
+    this._pokemonService.likePokemon(pokemon).
+    subscribe(
+      data => console.log('Success!', data),
+      error => console.error('Error!', error)
+    );
+  }
+  removePokemon(pokemon: Pokemon,id: number)
+  {
+    if(confirm("Are you sure to delete "+ pokemon.pokemonName)) {
+      this._pokemonService.removePokemon(pokemon.pokemonId).
+      subscribe(
+        data => console.log('Success!', data),
+        error => console.error('Error!', error)
+      );
+      //@TODO: implement this, so it does not need to refresh page:
+      //  delete this.pokemons[id]
+      this.refreshPage();
+    }
+  }
+
+  trackByFn(i: number)
+  {
+    return i;
+  }
+
+  refreshPage()
+  {
+    setTimeout(()=>{
+      window.location.reload();
+    }, 100);
+  }
+}
