@@ -1,0 +1,19 @@
+<div class="container justify-content-center" style="text-align: center">
+  <form [formGroup]="loginForm">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" required formControlName="username">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" required formControlName="password">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <button [disabled]="loginForm.invalid" (click)="loginUser()" mat-raised-button color="accent">Login</button>
+    </div>
+  </form>
+</div>

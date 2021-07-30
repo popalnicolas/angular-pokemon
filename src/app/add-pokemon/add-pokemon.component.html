@@ -1,0 +1,64 @@
+<div class="justify-content-center">
+  <h1 style="text-align: center">Add new Pokemon to your Pokedex! <div style="color: blueviolet">Gotta catch 'em all!</div></h1>
+  <div class="container">
+    <form [formGroup]="pokemonForm">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Pokemon Name
+          </mat-label>
+          <input matInput required formControlName="pokemonName">
+          <mat-hint class="text-danger" [hidden]="pokemonName!.valid || pokemonName!.untouched">
+            Name of the pokemon is required
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Pokemon Type
+          </mat-label>
+          <mat-select [(value)]="selectedPokemon" required formControlName="pokemonType">
+            <mat-option>--</mat-option>
+            <mat-option value="grass">Grass</mat-option>
+            <mat-option value="fire">Fire</mat-option>
+            <mat-option value="electric">Electric</mat-option>
+            <mat-option value="water">Water</mat-option>
+            <mat-option value="other">Other</mat-option>
+          </mat-select>
+          <mat-hint class="text-danger" [hidden]="pokemonType!.valid || pokemonType!.untouched">
+            Type of the pokemon is required
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Pokemon Image Url
+          </mat-label>
+          <input matInput required formControlName="pokemonImage">
+          <mat-hint class="text-danger" [hidden]="pokemonImage!.valid || pokemonImage!.untouched">
+            Image URL of the pokemon is required
+          </mat-hint>
+        </mat-form-field>
+        <div [hidden]="pokemonImage!.invalid">
+          Preview: <img [src]="pokemonForm.value.pokemonImage">
+        </div>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Pokemon Description
+          </mat-label>
+          <textarea style="resize: none" matInput rows="15" required formControlName="pokemonDescription"></textarea>
+          <mat-hint class="text-danger" [hidden]="pokemonDescription!.valid || pokemonDescription!.untouched">
+            Description of the pokemon is required
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div style="text-align: center">
+        <button [disabled]="!pokemonForm.valid" (click)="onSubmit()" mat-raised-button color="primary">Save Pokemon</button>
+      </div>
+    </form>
+  </div>
+</div>
