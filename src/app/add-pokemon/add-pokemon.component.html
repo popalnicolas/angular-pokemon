@@ -1,7 +1,7 @@
 <div class="justify-content-center">
   <h1 style="text-align: center">Add new Pokemon to your Pokedex! <div style="color: blueviolet">Gotta catch 'em all!</div></h1>
   <div class="container">
-    <form [formGroup]="pokemonForm">
+    <form [hidden]="pokemonAdded" [formGroup]="pokemonForm">
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>

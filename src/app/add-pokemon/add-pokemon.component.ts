@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PokemonService} from "../pokemon.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-pokemon',
@@ -12,6 +13,7 @@ export class AddPokemonComponent implements OnInit {
 
   pokemonForm: FormGroup;
   selectedPokemon = '';
+  pokemonAdded = false;
 
   get pokemonName()
   {
@@ -33,7 +35,7 @@ export class AddPokemonComponent implements OnInit {
     return this.pokemonForm.get('pokemonDescription');
   }
 
-  constructor(private fb: FormBuilder, private _pokemonService: PokemonService, private _snackBar: MatSnackBar)
+  constructor(private fb: FormBuilder, private _pokemonService: PokemonService, private _snackBar: MatSnackBar, private router: Router)
   {
     this.pokemonForm = this.fb.group({
       pokemonName:['', Validators.required],
@@ -68,9 +70,10 @@ export class AddPokemonComponent implements OnInit {
     this.pokemonForm.value.pokemonType = this.getType(this.pokemonForm.value.pokemonType);
     this._pokemonService.postPokemon(this.pokemonForm.value)
       .subscribe(
-        response => {
+        (response:any) => {
           console.log("Success!", response);
           this._snackBar.open("Pokemon added!", "Close", {duration: 3000});
+          this.pokemonAdded = true;
         },
           error => {
             console.log("Error!", error);

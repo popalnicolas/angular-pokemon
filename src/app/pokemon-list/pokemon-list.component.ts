@@ -95,7 +95,7 @@ export class PokemonListComponent implements OnInit {
         });
       //@TODO: implement this, so it does not need to refresh page:
       //  delete this.pokemons[id]
-      //this.refreshPage();
+      this.refreshPage();
     }
   }
 
