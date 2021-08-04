@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  errorMsg = '';
 
   constructor(private fb: FormBuilder, private userService: UserService, private snackBar: MatSnackBar, private router: Router)
   {
@@ -32,6 +33,8 @@ export class RegisterComponent implements OnInit {
         this.snackBar.open("Your account was created. You can now login.", "Okay", {duration: 3000});
         console.log("Success!", data);
         this.router.navigate(['/login']);
+      }, error => {
+        this.errorMsg = error.error;
       });
   }
 }

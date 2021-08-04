@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {PokemonService} from "../pokemon.service";
 import {Pokemon} from "../model/pokemon";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-pokemon-list',
@@ -14,7 +16,11 @@ export class PokemonListComponent implements OnInit {
   public pokemonType: any;
   public errorMsg: any;
 
-  constructor(private _pokemonService: PokemonService, private route:ActivatedRoute, private router: Router) { }
+  constructor(private _pokemonService: PokemonService,
+              private route:ActivatedRoute,
+              private router: Router,
+              private snackBar: MatSnackBar,
+              public userService: UserService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -67,12 +73,15 @@ export class PokemonListComponent implements OnInit {
 
   likePokemon(pokemon: Pokemon)
   {
-    pokemon.pokemonLikes++;
     this._pokemonService.likePokemon(pokemon).
     subscribe(
-      data => console.log('Success!', data),
-      error => console.error('Error!', error)
-    );
+      data => {
+        pokemon.pokemonLikes++;
+        console.log('Success!', data);
+      },
+      error => {
+        console.error('Error!', error)
+      });
   }
   removePokemon(pokemon: Pokemon,id: number)
   {
@@ -80,17 +89,14 @@ export class PokemonListComponent implements OnInit {
       this._pokemonService.removePokemon(pokemon.pokemonId).
       subscribe(
         data => console.log('Success!', data),
-        error => console.error('Error!', error)
-      );
+        error => {
+          console.error('Error!', error);
+          this.snackBar.open("You need to have administration permissions for this action.", "Close", {duration:3000});
+        });
       //@TODO: implement this, so it does not need to refresh page:
       //  delete this.pokemons[id]
-      this.refreshPage();
+      //this.refreshPage();
     }
-  }
-
-  trackByFn(i: number)
-  {
-    return i;
   }
 
   refreshPage()

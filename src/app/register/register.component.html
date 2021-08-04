@@ -22,4 +22,7 @@
       <button [disabled]="registerForm.invalid" (click)="registerUser()" mat-raised-button color="accent">Register</button>
     </div>
   </form>
+  <div [hidden]="errorMsg.length == 0" class="row">
+    <small class="text-danger">{{errorMsg}}</small>
+  </div>
 </div>

@@ -9,7 +9,7 @@ import {catchError} from "rxjs/operators";
 })
 export class PokemonService {
 
-  private _url: string = "http://localhost:8080/pokemons";
+  private _url: string = "http://localhost:8080/api/pokemon";
 
   constructor(private _http: HttpClient) { }
 

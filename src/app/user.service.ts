@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {User} from "./model/user";
 import {Router} from "@angular/router";
 
@@ -8,18 +8,26 @@ import {Router} from "@angular/router";
 })
 export class UserService {
 
-  private _url: string = "http://localhost:8080/user";
+  private _url: string = "http://localhost:8080/api/auth";
 
   constructor(private _http: HttpClient, private router: Router) { }
 
   registerUser(user: any)
   {
-    return this._http.post(this._url, user)
+    return this._http.post(`${this._url}/register`, user)
   }
 
   loginUser(username: string, password: string)
   {
-    return this._http.get(`${this._url}?username=${username}&password=${password}`);
+    const body = new HttpParams()
+      .set('username', username)
+      .set('password', password);
+
+    return this._http.post(`${this._url}/login`, body.toString(), {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded'),
+      //withCredentials: true
+    });
   }
 
   logoutUser()
@@ -33,4 +41,8 @@ export class UserService {
     return !!localStorage.getItem('token');
   }
 
+  getToken()
+  {
+    return localStorage.getItem('token');
+  }
 }
