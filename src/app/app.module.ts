@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import {AuthGuard} from "./auth.guard";
 import {TokenInterceptorService} from "./token-interceptor.service";
+import { PokemonRemoveDialogComponent } from './pokemon-remove-dialog/pokemon-remove-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {TokenInterceptorService} from "./token-interceptor.service";
     PokemonListComponent,
     PageNotFoundComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    PokemonRemoveDialogComponent
   ],
   imports: [
     BrowserModule,

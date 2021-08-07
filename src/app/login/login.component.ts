@@ -13,9 +13,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  data = ({
-    token: ''
-  });
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private snackBar: MatSnackBar)
   {
@@ -35,6 +32,7 @@ export class LoginComponent implements OnInit {
         console.log("Success!", res);
         //@TODO: use httponly cookie to secure it more
         localStorage.setItem('token', res.token);
+        sessionStorage.setItem('token', res.token);
           this.snackBar.open(`Welcome back, ${this.loginForm.value.username}!`, "Close", {duration: 3000});
         this.router.navigate(['/pokemons']);
         },

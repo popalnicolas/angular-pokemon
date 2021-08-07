@@ -1,4 +1,4 @@
-<div class="container d-flex justify-content-center" *ngFor="let pokemon of pokemons; let i = index">
+<div class="container d-flex justify-content-center" *ngFor="let pokemon of pokemons">
   <mat-card class="pokemon-card" id="#{{pokemon.pokemonId}}">
     <mat-card-header>
       <mat-card-title>{{pokemon.pokemonName | titlecase}}</mat-card-title>
@@ -12,7 +12,7 @@
     </mat-card-content>
     <mat-card-actions *ngIf="userService.loggedIn()">
       <button color="accent" mat-button (click)="likePokemon(pokemon)"><mat-icon>favorite</mat-icon>Like ({{pokemon.pokemonLikes}})</button>
-      <button mat-button color="warn" (click)="removePokemon(pokemon, i)"><mat-icon>clear</mat-icon>Delete Pokemon</button>
+      <button mat-button color="warn" (click)="openDialog(pokemon)"><mat-icon>clear</mat-icon>Delete Pokemon</button>
     </mat-card-actions>
   </mat-card>
 </div>
