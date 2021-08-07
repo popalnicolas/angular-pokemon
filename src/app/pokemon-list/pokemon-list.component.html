@@ -10,7 +10,7 @@
         {{pokemon.pokemonDescription}}
       </p>
     </mat-card-content>
-    <mat-card-actions *ngIf="userService.loggedIn()">
+    <mat-card-actions class="d-flex justify-content-center" *ngIf="userService.loggedIn()">
       <button color="accent" mat-button (click)="likePokemon(pokemon)"><mat-icon>favorite</mat-icon>Like ({{pokemon.pokemonLikes}})</button>
       <button mat-button color="warn" (click)="openDialog(pokemon)"><mat-icon>clear</mat-icon>Delete Pokemon</button>
     </mat-card-actions>
