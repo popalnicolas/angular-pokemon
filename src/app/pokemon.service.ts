@@ -15,12 +15,12 @@ export class PokemonService {
 
   getPokemons(): Observable<Pokemon[]>
   {
-    return this._http.get<Pokemon[]>(this._url).pipe(catchError(this.errorHandler));
+    return this._http.get<Pokemon[]>(this._url+"/list").pipe(catchError(this.errorHandler));
   }
 
   getPokemonsByType(type: number): Observable<Pokemon[]>
   {
-    return this._http.get<Pokemon[]>(this._url + "?type=" + type).pipe(catchError(this.errorHandler));
+    return this._http.get<Pokemon[]>(this._url + "/list?type=" + type).pipe(catchError(this.errorHandler));
   }
 
   postPokemon(pokemon: any)
